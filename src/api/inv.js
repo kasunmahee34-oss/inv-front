@@ -16,7 +16,7 @@ api.interceptors.request.use((config) => {
 
 // ─── Auth ─────────────────────────────────────────────────────────────────────
 export const authAPI = {
-  login: (data) => api.post('api/auth/login', data),
+  login: (data) => api.post('/auth/login', data),
 };
 
 // ─── Categories ───────────────────────────────────────────────────────────────
