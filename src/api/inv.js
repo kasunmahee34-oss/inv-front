@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const BASE = import.meta.env.VITE_API_BASE;
+const BASE = 'https://synora-inv-back-production.up.railway.app/api/';
 const api = axios.create({ baseURL: BASE });
 
 api.interceptors.request.use((config) => {
