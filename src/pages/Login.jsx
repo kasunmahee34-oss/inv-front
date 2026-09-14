@@ -26,47 +26,43 @@ export default function Login() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-slate-950 px-4">
-      {/* Background glow */}
+    <div className="relative flex min-h-screen items-center justify-center bg-slate-950 px-4 py-6 sm:px-6">
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-brand-500/5 rounded-full blur-3xl" />
+        <div className="absolute left-1/2 top-1/3 h-[420px] w-[420px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-brand-500/5 blur-3xl sm:h-[560px] sm:w-[560px]" />
       </div>
 
-      <div className="relative w-full max-w-sm">
-        {/* Card */}
-        <div className="glass rounded-2xl p-8 border border-white/8">
-          {/* Brand */}
-          <div className="flex flex-col items-center mb-8">
-            <div className="w-12 h-12 rounded-xl bg-brand-500/20 border border-brand-500/30 flex items-center justify-center mb-3">
+      <div className="relative w-full max-w-sm sm:max-w-md">
+        <div className="glass rounded-2xl border border-white/8 p-5 sm:p-8">
+          <div className="mb-6 flex flex-col items-center text-center sm:mb-8">
+            <div className="mb-3 flex h-12 w-12 items-center justify-center rounded-xl border border-brand-500/30 bg-brand-500/20">
               <Hotel size={24} className="text-brand-400" />
             </div>
             <h1 className="text-xl font-semibold text-white">Hotel Inventory</h1>
-            <p className="text-sm text-slate-400 mt-1">Sign in to continue</p>
+            <p className="mt-1 text-sm text-slate-400">Sign in to continue</p>
           </div>
 
-          {/* Form */}
           <form onSubmit={handleSubmit} className="space-y-4">
             {error && (
-              <div className="bg-red-500/10 border border-red-500/20 rounded-lg px-4 py-3 text-sm text-red-400">
+              <div className="rounded-lg border border-red-500/20 bg-red-500/10 px-4 py-3 text-sm text-red-400">
                 {error}
               </div>
             )}
 
             <div>
-              <label className="block text-xs font-medium text-slate-400 mb-1.5">Username</label>
+              <label className="mb-1.5 block text-xs font-medium text-slate-400">Username</label>
               <input
                 type="text"
                 autoComplete="username"
                 value={form.username}
                 onChange={e => setForm(f => ({ ...f, username: e.target.value }))}
                 required
-                className="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2.5 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-brand-500/50 focus:ring-1 focus:ring-brand-500/30 transition-colors"
+                className="w-full rounded-lg border border-white/10 bg-white/5 px-3 py-2.5 text-sm text-white placeholder-slate-500 transition-colors focus:border-brand-500/50 focus:outline-none focus:ring-1 focus:ring-brand-500/30"
                 placeholder="admin"
               />
             </div>
 
             <div>
-              <label className="block text-xs font-medium text-slate-400 mb-1.5">Password</label>
+              <label className="mb-1.5 block text-xs font-medium text-slate-400">Password</label>
               <div className="relative">
                 <input
                   type={showPassword ? 'text' : 'password'}
@@ -74,13 +70,13 @@ export default function Login() {
                   value={form.password}
                   onChange={e => setForm(f => ({ ...f, password: e.target.value }))}
                   required
-                  className="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2.5 pr-10 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-brand-500/50 focus:ring-1 focus:ring-brand-500/30 transition-colors"
+                  className="w-full rounded-lg border border-white/10 bg-white/5 px-3 py-2.5 pr-10 text-sm text-white placeholder-slate-500 transition-colors focus:border-brand-500/50 focus:outline-none focus:ring-1 focus:ring-brand-500/30"
                   placeholder="••••••••"
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword(v => !v)}
-                  className="absolute inset-y-0 right-0 px-3 text-slate-500 hover:text-slate-300 transition-colors"
+                  className="absolute inset-y-0 right-0 px-3 text-slate-500 transition-colors hover:text-slate-300"
                 >
                   {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
                 </button>
@@ -90,10 +86,10 @@ export default function Login() {
             <button
               type="submit"
               disabled={loading}
-              className="w-full flex items-center justify-center gap-2 bg-brand-500 hover:bg-brand-600 disabled:opacity-50 disabled:cursor-not-allowed text-white font-medium text-sm py-2.5 rounded-lg transition-colors mt-2"
+              className="mt-2 flex w-full items-center justify-center gap-2 rounded-lg bg-brand-500 py-2.5 text-sm font-medium text-white transition-colors hover:bg-brand-600 disabled:cursor-not-allowed disabled:opacity-50"
             >
               {loading ? (
-                <span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                <span className="h-4 w-4 animate-spin rounded-full border-2 border-white/30 border-t-white" />
               ) : (
                 <LogIn size={16} />
               )}
@@ -102,7 +98,7 @@ export default function Login() {
           </form>
         </div>
 
-        <p className="text-center text-xs text-slate-600 mt-4">
+        <p className="mt-4 text-center text-xs text-slate-600">
           Shared auth with Ella PMS · Hotel Inventory v0.1
         </p>
       </div>

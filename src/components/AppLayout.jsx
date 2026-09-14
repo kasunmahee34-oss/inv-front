@@ -87,20 +87,28 @@ function NavGroup({ group, items, collapsed }) {
 export default function AppLayout() {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
-  const [sidebarOpen, setSidebarOpen] = useState(true);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const handleLogout = () => { logout(); navigate('/login'); };
 
   return (
     <div className="flex h-screen overflow-hidden bg-slate-950 text-slate-100">
-      {/* Sidebar */}
-      <aside className={`${sidebarOpen ? 'w-60' : 'w-16'} flex flex-col flex-shrink-0 transition-all duration-200 glass border-r border-white/5`}>
-        {/* Logo */}
+      <div
+        className={`fixed inset-0 z-30 bg-slate-950/70 transition-opacity md:hidden ${sidebarOpen ? 'opacity-100' : 'pointer-events-none opacity-0'}`}
+        onClick={() => setSidebarOpen(false)}
+      />
+
+      <aside className={`
+        fixed inset-y-0 left-0 z-40 flex flex-col flex-shrink-0 transition-all duration-200 glass border-r border-white/5
+        ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'}
+        md:static md:translate-x-0 md:${sidebarOpen ? 'w-60' : 'w-16'}
+        ${sidebarOpen ? 'w-60' : 'w-60 md:w-16'}
+      `}>
         <div className="flex items-center gap-3 px-4 py-5 border-b border-white/5">
           <div className="flex-shrink-0 w-8 h-8 rounded-lg bg-brand-500/20 flex items-center justify-center">
             <Hotel size={18} className="text-brand-400" />
           </div>
-          {sidebarOpen && (
+          {(sidebarOpen || true) && (
             <div className="min-w-0 flex-1">
               <p className="text-sm font-semibold text-white truncate">Hotel Inventory</p>
               <p className="text-xs text-slate-400 truncate">v0.3</p>
@@ -112,14 +120,12 @@ export default function AppLayout() {
           </button>
         </div>
 
-        {/* Nav */}
         <nav className="flex-1 py-4 px-2 overflow-y-auto space-y-0.5">
           {NAV.map(group => (
-            <NavGroup key={group.group} {...group} collapsed={!sidebarOpen} />
+            <NavGroup key={group.group} {...group} collapsed={!sidebarOpen && window.innerWidth >= 768 ? false : !sidebarOpen} />
           ))}
         </nav>
 
-        {/* User */}
         <div className="border-t border-white/5 p-3">
           {sidebarOpen ? (
             <div className="flex items-center gap-2">
@@ -143,9 +149,26 @@ export default function AppLayout() {
         </div>
       </aside>
 
-      <main className="flex-1 overflow-y-auto">
-        <Outlet />
-      </main>
+      <div className="flex min-w-0 flex-1 flex-col">
+        <header className="flex items-center justify-between border-b border-white/5 bg-slate-950/80 px-4 py-3 backdrop-blur md:hidden">
+          <button onClick={() => setSidebarOpen(true)} className="text-slate-200" aria-label="Open menu">
+            <Menu size={20} />
+          </button>
+          <div className="flex items-center gap-2">
+            <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-brand-500/20 text-brand-400">
+              <Hotel size={16} />
+            </div>
+            <span className="text-sm font-semibold text-white">Hotel Inventory</span>
+          </div>
+          <button onClick={handleLogout} className="text-slate-300" aria-label="Logout">
+            <LogOut size={18} />
+          </button>
+        </header>
+
+        <main className="flex-1 overflow-y-auto">
+          <Outlet />
+        </main>
+      </div>
     </div>
   );
 }
